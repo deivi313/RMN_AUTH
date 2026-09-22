@@ -1,0 +1,89 @@
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --text: #1c2226;
+  --muted: #667077;
+  --border: #dde1e4;
+  --accent: #0b6e69;
+  --danger: #b42318;
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h2 { margin: 0 0 16px; }
+h3 { margin: 0; }
+
+.container { max-width: 960px; margin: 32px auto; padding: 0 16px; }
+.muted { color: var(--muted); }
+.error { color: var(--danger); margin: 0; }
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-weight: 700; color: var(--text); }
+.links { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.form { display: flex; flex-direction: column; gap: 12px; }
+.auth { max-width: 400px; margin: 48px auto; }
+
+input, select {
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font: inherit;
+  background: var(--surface);
+  color: var(--text);
+}
+input:focus-visible, select:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.search { width: 100%; margin-bottom: 12px; }
+
+button {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+button.secondary { background: #e8ebed; color: var(--text); }
+button.danger { background: var(--danger); }
+
+.table-wrap { overflow-x: auto; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 0.9rem; }
+.actions { display: flex; gap: 8px; }
