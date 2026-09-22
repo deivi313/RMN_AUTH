@@ -17,6 +17,12 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "nodemon": "^3.1.14"
   }
 }
+=======
+    "nodemon": "^3.1.10"
+  }
+}
+>>>>>>> 99a39f88c1b8db42b7c6b06c6afd1d222cb711d6
