@@ -6,17 +6,17 @@ const { authenticate, authorize } = require('./middleware');
 
 const app = express();
 
-// ---------- middleware (runs on every request, in this order) ----------
-app.use(cors({ origin: config.clientUrl })); // only our React app may call this API
-app.use(express.json()); // turns the JSON body into req.body
+
+app.use(cors({ origin: config.clientUrl }));
+app.use(express.json());
 app.use((req, res, next) => {
-  req.body ??= {}; // Express 5 leaves req.body undefined when the request has no body
+  req.body ??= {}; 
   next();
 });
 
 // ---------- routes ----------
-app.use('/api/auth', require('./routes/auth')); 
-app.use('/api/products', authenticate, require('./routes/products')); 
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/products', authenticate, require('./routes/products'));
 app.use('/api/users', authenticate, authorize('admin'), require('./routes/users'));
 
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
@@ -32,7 +32,7 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ message: 'The referenced user does not exist' });
   }
 
-  const status = err.status || 500; // log real bugs, never send details to the client
+  const status = err.status || 500; 
   res.status(status).json({ message: status === 500 ? 'Internal server error' : err.message });
 });
 

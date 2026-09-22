@@ -5,8 +5,8 @@ const { db } = require('./config');
 const sequelize = new Sequelize(db.name, db.user, db.password, {
   host: db.host,
   port: db.port,
-  dialect: 'mysql', 
-  logging: false, 
+  dialect: 'mysql',
+  logging: false,
 });
 
 const User = sequelize.define(
@@ -19,7 +19,7 @@ const User = sequelize.define(
       unique: true,
       validate: { isEmail: true },
     },
-    password: { type: DataTypes.STRING, allowNull: false },
+    password: { type: DataTypes.VARCHAR, allowNull: false },
     role: { type: DataTypes.ENUM('user', 'admin'), allowNull: false, defaultValue: 'user' },
   },
   { tableName: 'users' }
