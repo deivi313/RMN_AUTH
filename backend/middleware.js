@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const { User } = require('./models');
 const { jwt: jwtConfig } = require('./config');
 
-// 1) "Who are you?" — checks the token and loads the user
 const authenticate = async (req, res, next) => {
   const header = req.headers.authorization || '';
   const token = header.startsWith('Bearer ') ? header.slice(7) : null;
@@ -11,7 +10,7 @@ const authenticate = async (req, res, next) => {
   let user;
   try {
     const { id } = jwt.verify(token, jwtConfig.secret);
-    user = await User.findByPk(id); // read from the DB so role changes apply immediately
+    user = await User.findByPk(id); 
   } catch {
     return res.status(401).json({ message: 'Invalid or expired token' });
   }
@@ -21,7 +20,6 @@ const authenticate = async (req, res, next) => {
   next();
 };
 
-// 2) "Are you allowed?" — checks the role, e.g. authorize('admin')
 const authorize =
   (...roles) =>
     (req, res, next) => {

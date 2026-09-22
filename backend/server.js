@@ -1,4 +1,3 @@
-// server.js — sets up Express, mounts the routes and starts the server.
 const express = require('express');
 const cors = require('cors');
 const config = require('./config');
@@ -16,14 +15,12 @@ app.use((req, res, next) => {
 });
 
 // ---------- routes ----------
-app.use('/api/auth', require('./routes/auth')); // public: register + login
-app.use('/api/products', authenticate, require('./routes/products')); // any logged-in user
-app.use('/api/users', authenticate, authorize('admin'), require('./routes/users')); // admin only
+app.use('/api/auth', require('./routes/auth')); 
+app.use('/api/products', authenticate, require('./routes/products')); 
+app.use('/api/users', authenticate, authorize('admin'), require('./routes/users'));
 
-// ---------- unknown routes + errors (always last) ----------
 app.use((req, res) => res.status(404).json({ message: 'Route not found' }));
 
-// Express 5 sends errors from async routes here automatically, so routes need no try/catch
 app.use((err, req, res, next) => {
   if (err.name === 'SequelizeUniqueConstraintError') {
     return res.status(409).json({ message: 'Email is already registered' });
@@ -35,18 +32,16 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ message: 'The referenced user does not exist' });
   }
 
-  const status = err.status || 500;
-  if (status === 500) console.error(err); // log real bugs, never send details to the client
+  const status = err.status || 500; // log real bugs, never send details to the client
   res.status(status).json({ message: status === 500 ? 'Internal server error' : err.message });
 });
 
 // ---------- start ----------
 const start = async () => {
   try {
-    await sequelize.authenticate(); // stop early if MySQL is unreachable
-    await sequelize.sync(); // creates the tables if they don't exist yet
+    await sequelize.authenticate();
+    await sequelize.sync();
 
-    // create the first admin (from config.js) if it doesn't exist
     await User.findOrCreate({
       where: { email: config.admin.email },
       defaults: { name: 'Admin', password: config.admin.password, role: 'admin' },
